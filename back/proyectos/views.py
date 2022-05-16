@@ -1,50 +1,47 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view
+# ----------------- Libraries ----------------------
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, viewsets, status
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-
+# My own files
 from .models import Proyecto
 from .serializers import ProyectoSerializer
-# Create your views here.
+# ----------------- Views Classes --------------------------------
+# Display all objects on the databases
+class ProyectoList(generics.ListAPIView):
+    serializer_class = ProyectoSerializer
+    queryset = Proyecto.objects.all()
+# Display the object details on an API request
+class ProyectoDetail(generics.RetrieveAPIView):
+    serializer_class = ProyectoSerializer
+    def get_object(self, queryset=None, **kwargs):
+        item = self.kwargs.get('pk')
+        return get_object_or_404(Proyecto, slug=item)
 
+# Create a Proyecto object from API view
+class CreateProyecto(APIView):
+    parser_classes = [MultiPartParser, FormParser]
 
-@api_view(['GET', 'POST'])
-def getAddWorks(request):
-    # Create the proyecto
-    if request.method == 'POST':
-        data = request.data
-        proyecto = Proyecto.objects.create(
-            title=data['title'],
-            image=['image'],
-            description=['description'],
-            tipo_trabajo=['tipo_trabajo'],
-        )
-        serializer = ProyectoSerializer(proyecto, many=False)
-        return Response(serializer.data)
-    # Get the proyectos
-    elif request.method == 'GET':
-        proyectos = Proyecto.objects.all()
-        serializer = ProyectoSerializer(proyectos, many=True)
-        return Response(serializer.data)
-
-
-# API to look for the proyecto, update or delete
-@api_view(['GET', 'PUT', 'DELETE'])
-def getDeleteUpdateJob(request, pk):
-    # Get the blog information
-    proyecto = Proyecto.objects.get(id=pk)
-    # Get the proyecto 
-    if request.method == 'GET':
-        serializer = ProyectoSerializer(proyecto, many=False)
-        return Response(serializer.data)
-    # Update the proyecto
-    if request.method == 'PUT':
-        data = request.data
-        serializer = ProyectoSerializer(instance=proyecto, data=data)
-        # Save the updated proyecto
+    def post(self, request, format=None):
+        print(request.data)
+        serializer = ProyectoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
-    # Delete the proyecto
-    if request.method == 'DELETE':
-        proyecto.delete()
-        return Response("BLOG DELETED")
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Admin details
+class AdminProyectoDetail(generics.RetrieveAPIView):
+    queryset = Proyecto.objects.all()
+    serializer_class = ProyectoSerializer
+# We need to edit the proyect, right?
+class EditProyecto(generics.UpdateAPIView):
+    serializer_class = ProyectoSerializer
+    queryset = Proyecto.objects.all()
+# Delete the proyect
+class DeleteProyecto(generics.RetrieveDestroyAPIView):
+    serializer_class = ProyectoSerializer
+    queryset = Proyecto.objects.all()

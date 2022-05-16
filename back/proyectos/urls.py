@@ -1,7 +1,8 @@
 # ------------------------ Libraries -------------------------
 from django.urls import path
 # ---------------------- Own Files -----------------------------
-from . import views
+from .views import ProyectoList, ProyectoDetail, CreateProyecto, AdminProyectoDetail, EditProyecto, DeleteProyecto
+
 # ------------------ Copyright ----------------------------------
 __author__ = "Danny Sequeira"
 __copyright__ = "Copyright (C) Danny Sequeira 2022"
@@ -9,7 +10,13 @@ __copyright__ = "Copyright (C) Danny Sequeira 2022"
 # getDeleteUpdateBlog
 # urls
 urlpatterns = [
-   path('api/', views.getAddWorks, name="varios trabajos"),
-   # Get, Delete, and Update Blog
-   path('api/blog/<str:pk>/', views.getDeleteUpdateJob, name="Trabajo especifico"),
+   path('api/', ProyectoList.as_view(), name="lista-trabajos"),
+   path('api/proyecto/<str:pk>/', ProyectoDetail.as_view(), name="proyect"),
+   path('api/create', CreateProyecto.as_view(), name="create"),
+   path('api/edit/<int:id>', EditProyecto.as_view(), name="Edit proyect"),
+   path('api/edit/postdetil/<int:id>', AdminProyectoDetail.as_view, name="Postdetail edit"), 
+   path('api/delete/<int:id>', DeleteProyecto.as_view(), name="Delete proyect")
+
+   
 ]
+
