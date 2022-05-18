@@ -1,0 +1,103 @@
+body {
+  background-color: #f2f2f2;
+  font-family: "Lato";
+  font-weight: 300;
+  font-size: 16px;
+  color: #555;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* spinner */
+.App-logo {
+  height: 5vh;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 10s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Introducccion a paula */
+.paula {
+  background: url('https://images.pexels.com/photos/7536592/pexels-photo-7536592.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260') no-repeat center top rgba(0, 0, 0, 0.5);
+  margin-top: 60px;
+  padding-top: 140px;
+  text-align: center;
+  background-attachment: relative;
+  background-position: center center;
+  min-height: 500px;
+  width: 100%;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.paula h1 {
+  font-size: 80px;
+  color: #fc79c8;
+}
+
+.paula h3 {
+  font-size: 20px;
+  color: #fc79c8;
+}
+
+.paula p {
+  color: #803030c8;
+}
+
+/* Intnro Wrap */
+
+.about {
+  background: #772c59;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  color: white;
+}
+
+.about h5 {
+  color: white;
+}
+
+.about i {
+  color: white;
+  font-size: 20px;
+  padding-right: 8px;
+  vertical-align: middle;
+}
+
+.bg-rose {
+  background: #772c59;
+}
+
+.icons {
+  font-size: 20px;
+}
+
+#section-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  overflow: visible;
+  font: normal 16px/24px 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
